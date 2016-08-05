@@ -1,0 +1,8 @@
+- Click on cell
+- Arrow to show direction
+- Create clue 'bank'
+- Match up answers in grid to the clue blank
+- Select from a pre-defined starting grid
+- "Undo"
+- Suggest words based on pattern Match
+- Save
