@@ -4,14 +4,14 @@ export const GRID_SIZE = 15;
 
 export const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
 export const UPPER_ALPHABET = ALPHABET.toUpperCase();
+export const ALL_LEGAL_VALUES = ALPHABET + UPPER_ALPHABET + '. ';
 
 export const isAlpha = (value) => {
   return (ALPHABET + UPPER_ALPHABET).indexOf(value) !== -1;
 }
 
 export const isLegalValue = (value) => {
-  const allLegalValues = ALPHABET + UPPER_ALPHABET + '. ';
-  return allLegalValues.indexOf(value) !== -1;
+  return ALL_LEGAL_VALUES.indexOf(value) !== -1;
 }
 
 export const makeGrid = (size, empty=' ') => {
