@@ -1,4 +1,4 @@
-- Click on cell
+- Redux?
 - Arrow to show direction
 - Create clue 'bank'
 - Match up answers in grid to the clue blank
