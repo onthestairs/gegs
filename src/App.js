@@ -9,7 +9,7 @@ import crosswordApp from './reducers'
 import DevTools from './components/DevTools';
 
 
-const useDevTools = true;
+const useDevTools = false;
 
 let store;
 if(useDevTools) {
@@ -37,7 +37,7 @@ class App extends Component {
 
     return (
       <Provider store={store}>
-        <div className="App">
+        <div className="mainApp">
           <div className="crosswordHolder">
             <CrosswordApp />
           </div>

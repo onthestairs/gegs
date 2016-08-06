@@ -15,8 +15,7 @@ const CluesComponent = ({clues}) => {
   const downCluesLis = renderClues(downClues);
   return (
     <div>
-      <h3>Clues</h3>
-      <div className="clues">
+      <div>
         <div className="clueList">
           <h3>Across</h3>
           <ol>{acrossCluesLis}</ol>

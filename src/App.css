@@ -1,3 +1,14 @@
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+#root,
+.mainApp,
+.crosswordHolder {
+    height: 100%;
+}
+
 /* Holder */
 
 .crosswordHolder {
@@ -5,15 +16,36 @@
   justify-content: center;
 }
 
+/* Container */
+
+.appContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+
+/* Clue bank */
+.clueBank {
+  font-family: serif;
+  min-width: 300px;
+  text-align: left;
+}
+
 
 /* Grid */
 
+.gridHolder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .grid {
   display: flex;
   flex-direction: column;
   border: 1px solid black;
-  margin-top: 50px;
 }
 
 .row {
@@ -45,6 +77,16 @@
   font-size: 12px;
 }
 
-* {
-  box-sizing: border-box;
+/* Clues */
+.cluesHolder {
+  font-family: serif;
+  min-width: 300px;
+  text-align: left;
+  margin-left: 40px;
+  display: flex;
+  margin-top: 50px;
+}
+
+.clueList h3 {
+  margin-top: 0px;
 }
