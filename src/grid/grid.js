@@ -23,23 +23,24 @@ export const getOtherRowCol = (row, col) => {
 }
 
 export const placeValue = (grid, row, col, value) => {
-  grid[row][col] = value;
+  let newGrid = Immutable.fromJS(grid).toJS();
+  newGrid[row][col] = value;
   const [otherRow, otherCol] = getOtherRowCol(row, col);
-  const otherValue = grid[otherRow][otherCol];
+  const otherValue = newGrid[otherRow][otherCol];
   if(value === '.') {
-    grid[otherRow][otherCol] = value;
+    newGrid[otherRow][otherCol] = value;
   } else if(isAlpha(value)) {
     if(!isAlpha(otherValue)) {
-      grid[otherRow][otherCol] = '-';
+      newGrid[otherRow][otherCol] = '-';
     }
   } else { // blank
     if(otherValue === '.' || otherValue === '-') {
-      grid[otherRow][otherCol] = ' ';
+      newGrid[otherRow][otherCol] = ' ';
     } else if(isAlpha(otherValue)) {
-        grid[row][col] = '-';
+        newGrid[row][col] = '-';
     }
   }
-  return grid;
+  return newGrid;
 }
 
 export const isDownClue = (grid, [row, col]) => {

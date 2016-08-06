@@ -5,7 +5,10 @@ const initialState = {
   grid: initialGrid,
   clues: gridUtils.gridClueLocations(initialGrid),
   cursor: [0, 0],
-  direction: 'r'
+  direction: 'r',
+  clueBank: {
+    'AUSTIN': 'Absolute badman!'
+  }
 }
 
 const DIR_TO_DELTA = {
@@ -20,6 +23,20 @@ const moveCursor = ([rD, cD], [row, col]) => {
     Math.min(gridUtils.GRID_SIZE-1, Math.max(0, row + rD)),
     Math.min(gridUtils.GRID_SIZE-1, Math.max(0, col + cD))
   ]
+}
+
+const addClues = (clues, clueBank) => {
+  return clues.map(clue => {
+    const answer = clue.answer.toUpperCase();
+    if(answer in clueBank) {
+      return {
+        ...clue,
+        clue: clueBank[answer]
+      }
+    } else {
+      return clue
+    }
+  });
 }
 
 const crossword = (state = initialState, action) => {
@@ -47,13 +64,14 @@ const crossword = (state = initialState, action) => {
         }
 
     case 'SET_GRID_VALUE':
-        const {grid, cursor: [row, col]} = state;
+        const {grid, cursor: [row, col], clueBank} = state;
         const newGrid = gridUtils.placeValue(grid, row, col, action.value);
         const clues = gridUtils.gridClueLocations(newGrid);
+        const cluesWithClues = addClues(clues, clueBank);
         return {
           ...state,
           grid: newGrid,
-          clues: clues
+          clues: cluesWithClues
         }
 
     default:

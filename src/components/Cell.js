@@ -5,10 +5,10 @@ import { setGridCursor } from '../actions'
 import * as gridUtils from '../grid/grid';
 
 
-const CellComponent = ({value, row, col, number, isFocussed, onClickHandler}) => {
+const CellComponent = ({value, row, col, number, isFocussed, isShaded, onClickHandler}) => {
     let classes = ['cell'];
     let contents, numberSpan;
-    if (value === '.') {
+    if (isShaded) {
        classes.push('shaded')
        contents = '.';
     } else {
@@ -31,9 +31,11 @@ const CellComponent = ({value, row, col, number, isFocussed, onClickHandler}) =>
 const mapStateToProps = ({crossword: {clues, cursor: [cursorRow, cursorCol]}}, {value, row, col}) => {
   const number = gridUtils.positionToNumber(clues, [row, col]);
   const isFocussed = row === cursorRow && col === cursorCol;
+  const isShaded = value === '.';
   return {
     number,
-    isFocussed
+    isFocussed,
+    isShaded
   }
 }
 

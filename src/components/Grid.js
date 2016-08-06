@@ -7,7 +7,7 @@ import { setGridValue, moveGridCursor } from '../actions'
 import {HotKeys} from 'react-hotkeys';
 
 const keyMap = {
-  'entry': gridUtils.ALL_LEGAL_VALUES.split(""),
+  'entry': gridUtils.ALL_LEGAL_VALUES.split("").concat(['space']),
   'direction': ['up', 'down', 'left', 'right']
 }
 
@@ -15,7 +15,7 @@ const Grid = ({grid, cursor, onDirectionPressed, onEntryPressed}) => {
 
   const cells = grid.map((row, i) => {
     const rowCells = row.map((cell, j) => {
-      return <Cell value={cell} row={i} col={j} />
+      return <Cell value={cell} row={i} col={j} key={[i, j]}/>
     });
     return (<div className="row" key={i}>{rowCells}</div>);
   });
@@ -42,7 +42,7 @@ const mapStateToProps = ({crossword}) => {
   }
 }
 
-const mapDispatchToProps = (dispatch, ) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     onDirectionPressed: (e) => {
       e.preventDefault();
@@ -56,8 +56,10 @@ const mapDispatchToProps = (dispatch, ) => {
       dispatch(moveGridCursor(dir));
     },
     onEntryPressed: (e) => {
+      const SPACE_KEY = 32;
+      const value = e.key === SPACE_KEY ? ' ' : e.key;
+      dispatch(setGridValue(value));
       e.preventDefault();
-      dispatch(setGridValue(e.key));
     }
   }
 }
