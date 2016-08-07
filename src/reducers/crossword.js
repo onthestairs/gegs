@@ -83,9 +83,11 @@ const crossword = (state = initialState, action) => {
     case 'ADD_CLUE_TO_BANK':
         const newClueBankClue = {clue: action.clue, answer: action.answer}
         const newClueBank = [...state.clueBank, newClueBankClue];
+        const newCluesWithClues = addClues(state.clues, newClueBank);
         return {
           ...state,
-          clueBank: newClueBank
+          clueBank: newClueBank,
+          clues: newCluesWithClues
         }
 
     default:
