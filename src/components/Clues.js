@@ -3,7 +3,13 @@ import { connect } from 'react-redux'
 
 const renderClues = (clues) => {
   return clues.map(clue => {
-    return <li value={clue.n} key={clue.n + clue.direction}> {clue.clue} ({clue.answer.length})</li>
+    let lengths;
+    if(clue.answer) {
+      lengths = clue.answer.split(" ").map(x => x.length);
+    } else {
+      lengths = [clue.gridAnswer.length];
+    }
+    return <li value={clue.n} key={clue.n + clue.direction}> {clue.clue} ({lengths.join(",")})</li>
   });
 }
 

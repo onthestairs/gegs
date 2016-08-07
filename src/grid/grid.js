@@ -91,12 +91,13 @@ export const downClueDetails = (grid, [row, col]) => {
   let answer = '';
   let _row = row;
   while(_row < GRID_SIZE && grid[_row][col] !== '.') {
-    answer += grid[_row][col];
+    const currentValue = grid[_row][col];
+    answer += currentValue;
     _row += 1;
   }
   return {
     position: [row, col],
-    answer: answer
+    gridAnswer: answer
   }
 }
 
@@ -104,12 +105,13 @@ export const acrossClueDetails = (grid, [row, col]) => {
   let answer = '';
   let _col = col;
   while(_col < GRID_SIZE && grid[row][_col] !== '.') {
-    answer += grid[row][_col];
+    const currentValue = grid[row][_col];
+    answer += currentValue;
     _col += 1;
   }
   return {
     position: [row, col],
-    answer: answer
+    gridAnswer: answer
   }
 }
 
