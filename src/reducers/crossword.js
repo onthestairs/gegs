@@ -30,7 +30,6 @@ const addClues = (clues, clueBank) => {
     const answer = clue.gridAnswer.toUpperCase();
     const filteredClueBank = clueBank.filter(bankClue => {
       const bankClueAnswer = bankClue.answer.replace(/ /g, '');
-      console.log(bankClueAnswer, answer);
       return bankClueAnswer === answer;
     });
     if(filteredClueBank.length > 0) {

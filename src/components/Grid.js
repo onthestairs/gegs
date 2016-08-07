@@ -7,7 +7,7 @@ import { setGridValue, moveGridCursor } from '../actions'
 import {HotKeys} from 'react-hotkeys';
 
 const keyMap = {
-  'entry': gridUtils.ALL_LEGAL_VALUES.split("").concat(['space']),
+  'entry': gridUtils.ALL_LEGAL_VALUES.split("").concat(['space', 'backspace']),
   'direction': ['up', 'down', 'left', 'right']
 }
 
@@ -57,7 +57,8 @@ const mapDispatchToProps = (dispatch) => {
     },
     onEntryPressed: (e) => {
       const SPACE_KEY = 32;
-      const value = e.key === SPACE_KEY ? ' ' : e.key;
+      const BACKSPACE_KEY = 8;
+      const value = (e.keyCode === SPACE_KEY || e.keyCode === BACKSPACE_KEY) ? ' ' : e.key;
       dispatch(setGridValue(value));
       e.preventDefault();
     }
