@@ -77,6 +77,11 @@ body,
   font-size: 12px;
 }
 
+.cell .clueNumber {
+  font-family: serif;
+  font-style: italic;
+}
+
 /* Clues */
 .cluesHolder {
   font-family: serif;

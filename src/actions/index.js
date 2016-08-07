@@ -32,3 +32,11 @@ export const moveGridDirection = (direction) => {
     direction
   }
 }
+
+export const addClueToBank = (answer, clue) => {
+  return {
+    type: 'ADD_CLUE_TO_BANK',
+    answer,
+    clue
+  }
+}
