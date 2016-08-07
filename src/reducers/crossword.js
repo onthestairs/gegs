@@ -5,7 +5,7 @@ const initialState = {
   grid: initialGrid,
   clues: gridUtils.gridClueLocations(initialGrid),
   cursor: [0, 0],
-  direction: 'r',
+  direction: 'right',
   clueBank: [
     {answer: 'AUSTIN', clue: 'Absolute badman!'}
   ]
@@ -44,7 +44,20 @@ const addClues = (clues, clueBank) => {
   });
 }
 
+const oppositeDirection = (direction) => {
+  const mapping = {
+    'down': 'up',
+    'up': 'down',
+    'left': 'right',
+    'right': 'left'
+  }
+  return mapping[direction];
+}
+
 const crossword = (state = initialState, action) => {
+
+  const {grid, cursor: [row, col], clueBank, direction} = state;
+
   switch (action.type) {
 
     case 'SET_GRID_CURSOR':
@@ -54,34 +67,47 @@ const crossword = (state = initialState, action) => {
       }
 
     case 'MOVE_GRID_CURSOR':
-      const {cursor} = state;
+    {
       const delta = DIR_TO_DELTA[action.direction];
-      const newCursor = moveCursor(delta, cursor);
+      const newCursor = moveCursor(delta, [row, col]);
+      const newDirection = action.direction === 'down' || action.direction === 'right' ? action.direction : direction;
       return {
         ...state,
-        cursor: newCursor
+        cursor: newCursor,
+        direction: newDirection
       }
+    }
 
-    case 'SET_GRID_DIRECTION':
-        return {
-          ...state,
-          direction: action.direction
-        }
+    case 'MOVE_GRID_BACK':
+    {
+      const newGrid = gridUtils.placeValue(grid, row, col, ' ');
+      const delta = DIR_TO_DELTA[oppositeDirection(direction)];
+      const newCursor = moveCursor(delta, [row, col]);
+      return {
+        ...state,
+        grid: newGrid,
+        cursor: newCursor,
+      }
+    }
 
     case 'SET_GRID_VALUE':
-        const {grid, cursor: [row, col], clueBank} = state;
+    {
         const newGrid = gridUtils.placeValue(grid, row, col, action.value);
         const clues = gridUtils.gridClueLocations(newGrid);
         const cluesWithClues = addClues(clues, clueBank);
+        const delta = DIR_TO_DELTA[direction];
+        const newCursor = moveCursor(delta, [row, col]);
         return {
           ...state,
           grid: newGrid,
-          clues: cluesWithClues
+          clues: cluesWithClues,
+          cursor: newCursor
         }
+    }
 
     case 'ADD_CLUE_TO_BANK':
         const newClueBankClue = {clue: action.clue, answer: action.answer}
-        const newClueBank = [...state.clueBank, newClueBankClue];
+        const newClueBank = [...clueBank, newClueBankClue];
         const newCluesWithClues = addClues(state.clues, newClueBank);
         return {
           ...state,

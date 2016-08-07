@@ -9,7 +9,7 @@ import crosswordApp from './reducers'
 import DevTools from './components/DevTools';
 
 
-const useDevTools = false;
+const useDevTools = true;
 
 let store;
 if(useDevTools) {

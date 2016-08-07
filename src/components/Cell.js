@@ -5,7 +5,7 @@ import { setGridCursor } from '../actions'
 import * as gridUtils from '../grid/grid';
 
 
-const CellComponent = ({value, row, col, number, isFocussed, isShaded, onClickHandler}) => {
+const CellComponent = ({value, row, col, number, direction, isFocussed, isShaded, onClickHandler}) => {
     let classes = ['cell'];
     let contents, numberSpan;
     if (isShaded) {
@@ -23,19 +23,25 @@ const CellComponent = ({value, row, col, number, isFocussed, isShaded, onClickHa
       numberSpan = null;
     }
     const classNames = classes.join(' ');
+    const directionSpan = isFocussed ? <div className={'arrow ' + direction}></div> : null;
     return (
-      <div className={classNames} onClick={() => onClickHandler([row, col])}>{numberSpan}{contents}</div>
+      <div className={classNames} onClick={() => onClickHandler([row, col])}>
+        {numberSpan}
+        {directionSpan}
+        {contents}
+      </div>
     );
 }
 
-const mapStateToProps = ({crossword: {clues, cursor: [cursorRow, cursorCol]}}, {value, row, col}) => {
+const mapStateToProps = ({crossword: {clues, direction, cursor: [cursorRow, cursorCol]}}, {value, row, col}) => {
   const number = gridUtils.positionToNumber(clues, [row, col]);
   const isFocussed = row === cursorRow && col === cursorCol;
   const isShaded = value === '.';
   return {
     number,
     isFocussed,
-    isShaded
+    isShaded,
+    direction
   }
 }
 

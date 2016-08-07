@@ -2,16 +2,17 @@ import React from 'react';
 import Cell from './Cell';
 import * as gridUtils from '../grid/grid';
 import { connect } from 'react-redux'
-import { setGridValue, moveGridCursor } from '../actions'
+import { setGridValue, moveGridCursor, moveGridBack} from '../actions'
 
 import {HotKeys} from 'react-hotkeys';
 
 const keyMap = {
-  'entry': gridUtils.ALL_LEGAL_VALUES.split("").concat(['space', 'backspace']),
-  'direction': ['up', 'down', 'left', 'right']
+  'entry': gridUtils.ALL_LEGAL_VALUES.split("").concat(['space']),
+  'direction': ['up', 'down', 'left', 'right'],
+  'backspace': ['backspace']
 }
 
-const Grid = ({grid, cursor, onDirectionPressed, onEntryPressed}) => {
+const Grid = ({grid, cursor, onDirectionPressed, onEntryPressed, onBackspacePressed}) => {
 
   const cells = grid.map((row, i) => {
     const rowCells = row.map((cell, j) => {
@@ -22,7 +23,8 @@ const Grid = ({grid, cursor, onDirectionPressed, onEntryPressed}) => {
 
   const handlers = {
     'entry': onEntryPressed,
-    'direction': onDirectionPressed
+    'direction': onDirectionPressed,
+    'backspace': onBackspacePressed
   };
 
   return (
@@ -61,7 +63,11 @@ const mapDispatchToProps = (dispatch) => {
       const value = (e.keyCode === SPACE_KEY || e.keyCode === BACKSPACE_KEY) ? ' ' : e.key;
       dispatch(setGridValue(value));
       e.preventDefault();
-    }
+    },
+    onBackspacePressed: (e) => {
+      e.preventDefault();
+      dispatch(moveGridBack());
+    },
   }
 }
 

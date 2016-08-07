@@ -12,13 +12,6 @@ export const moveGridCursor = (direction) => {
   }
 }
 
-export const setGridDirection = (direction) => {
-  return {
-    type: 'SET_GRID_DIRECTION',
-    direction
-  }
-}
-
 export const setGridValue = (value) => {
   return {
     type: 'SET_GRID_VALUE',
@@ -30,6 +23,12 @@ export const moveGridDirection = (direction) => {
   return {
     type: 'MOVE_GRID_DIRECTION',
     direction
+  }
+}
+
+export const moveGridBack = () => {
+  return {
+    type: 'MOVE_GRID_BACK'
   }
 }
 
