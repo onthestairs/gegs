@@ -4,3 +4,4 @@
 - Suggest words based on pattern Match
 - Save
 - everything immutable
+- grid controls (fix grid etc)

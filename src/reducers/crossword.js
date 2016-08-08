@@ -61,10 +61,15 @@ const crossword = (state = initialState, action) => {
   switch (action.type) {
 
     case 'SET_GRID_CURSOR':
+    {
+      const {cursor: [newRow, newCol]} = action;
+      const newDirection = (newRow === row) && (newCol === col) ? (direction === 'right' ? 'down' : 'right') : direction;
       return {
         ...state,
-        cursor: action.cursor
+        cursor: [newRow, newCol],
+        direction: newDirection
       }
+    }
 
     case 'MOVE_GRID_CURSOR':
     {
