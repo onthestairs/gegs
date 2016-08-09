@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { addClueToBank } from '../actions'
 
-const AddClueToBankComponent = ({ dispatch }) => {
+const AddClueToBankComponent = ({dispatch}) => {
 
   let answerInput, clueInput;
 

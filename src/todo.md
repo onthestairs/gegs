@@ -1,3 +1,5 @@
+- Name crosswords
+- Delete from clue bank
 - Select from a pre-defined starting grid
 - "Undo"
 - Suggest words based on pattern Match

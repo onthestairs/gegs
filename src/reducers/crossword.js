@@ -128,16 +128,19 @@ const crossword = (state = initialCrosswordState, action) => {
 const initialCrosswordsState = {
   currentCrosswordId: 1,
   crosswords: {
-    1: initialCrosswordState
+    1: initialCrosswordState,
+    2: initialCrosswordState
   }
 }
 
 const crosswords = (state = initialCrosswordsState, action) => {
   const {currentCrosswordId, crosswords} = state;
   switch (action.type) {
-    case 'CHANGE_CROSSWORD':
-
-      return state;
+    case 'SELECT_CROSSWORD':
+      return {
+        ...state,
+        currentCrosswordId: action.crosswordId
+      };
     case 'NEW_CROSSWORD':
 
         return state;

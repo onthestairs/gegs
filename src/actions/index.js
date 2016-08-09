@@ -39,3 +39,10 @@ export const addClueToBank = (answer, clue) => {
     clue
   }
 }
+
+export const selectCrossword = (crosswordId) => {
+  return {
+    type: 'SELECT_CROSSWORD',
+    crosswordId
+  }
+}
