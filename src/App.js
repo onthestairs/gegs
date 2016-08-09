@@ -11,7 +11,7 @@ import DevTools from './components/DevTools';
 import persistState from 'redux-localstorage'
 
 
-const useDevTools = true;
+const useDevTools = false;
 
 let enhancer;
 if(useDevTools) {

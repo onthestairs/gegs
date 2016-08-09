@@ -46,3 +46,16 @@ export const selectCrossword = (crosswordId) => {
     crosswordId
   }
 }
+
+export const newCrossword = () => {
+  return {
+    type: 'NEW_CROSSWORD'
+  }
+}
+
+export const setFixGridStatus = (fixGridstatus) => {
+  return {
+    type: 'SET_FIX_GRID_STATUS',
+    fixGridstatus
+  }
+}

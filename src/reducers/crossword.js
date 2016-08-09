@@ -6,6 +6,7 @@ const initialCrosswordState = {
   clues: gridUtils.gridClueLocations(initialGrid),
   cursor: [0, 0],
   direction: 'right',
+  fixGrid: false,
   clueBank: [
     {answer: 'AUSTIN', clue: 'Absolute badman!'}
   ]
@@ -118,6 +119,13 @@ const crossword = (state = initialCrosswordState, action) => {
           ...state,
           clueBank: newClueBank,
           clues: newCluesWithClues
+        }
+
+    case 'SET_FIX_GRID_STATUS':
+
+        return {
+          ...state,
+          fixGrid: action.fixGridstatus
         }
 
     default:
