@@ -4,3 +4,4 @@
 - everything immutable
 - grid controls (fix grid etc)
 - react router
+- highlight "unfinished" bits

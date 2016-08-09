@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import crossword from './crossword'
+import crosswords from './crossword'
 
 const crosswordApp = combineReducers({
-  crossword,
+  crosswords,
 })
 
 export default crosswordApp

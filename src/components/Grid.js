@@ -1,8 +1,9 @@
 import React from 'react';
 import Cell from './Cell';
 import * as gridUtils from '../grid/grid';
-import { connect } from 'react-redux'
-import { setGridValue, moveGridCursor, moveGridBack} from '../actions'
+import { connect } from 'react-redux';
+import { setGridValue, moveGridCursor, moveGridBack} from '../actions';
+import {currentCrosswordState} from '../reducers/utils';
 
 import {HotKeys} from 'react-hotkeys';
 
@@ -37,10 +38,11 @@ const Grid = ({grid, cursor, onDirectionPressed, onEntryPressed, onBackspacePres
 
 }
 
-const mapStateToProps = ({crossword}) => {
+const mapStateToProps = (state) => {
+  const {grid, cursor} = currentCrosswordState(state);
   return {
-    grid: crossword.grid,
-    cursor: crossword.cursor
+    grid,
+    cursor
   }
 }
 

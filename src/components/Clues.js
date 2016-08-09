@@ -1,5 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import {currentCrosswordState} from '../reducers/utils';
 
 const renderClues = (clues) => {
   return clues.map(clue => {
@@ -36,7 +37,8 @@ const CluesComponent = ({clues}) => {
 
 }
 
-const mapStateToProps = ({crossword: {clues, cursor: [cursorRow, cursorCol]}}, {value, row, col}) => {
+const mapStateToProps = (state, {value, row, col}) => {
+  const {clues} = currentCrosswordState(state);
   return {
     clues
   }

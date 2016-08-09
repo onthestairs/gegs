@@ -29,7 +29,6 @@ const store = createStore(crosswordApp, enhancer);
 
 class App extends Component {
 
-
   render() {
 
     let devTools;

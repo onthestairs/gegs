@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { setGridCursor } from '../actions'
 
 import * as gridUtils from '../grid/grid';
+import {currentCrosswordState} from '../reducers/utils';
 
 
 const CellComponent = ({value, row, col, number, direction, isFocussed, isShaded, onClickHandler}) => {
@@ -33,7 +34,8 @@ const CellComponent = ({value, row, col, number, direction, isFocussed, isShaded
     );
 }
 
-const mapStateToProps = ({crossword: {clues, direction, cursor: [cursorRow, cursorCol]}}, {value, row, col}) => {
+const mapStateToProps = (state, {value, row, col}) => {
+  const {clues, direction, cursor: [cursorRow, cursorCol]} = currentCrosswordState(state);
   const number = gridUtils.positionToNumber(clues, [row, col]);
   const isFocussed = row === cursorRow && col === cursorCol;
   const isShaded = value === '.';
@@ -43,7 +45,7 @@ const mapStateToProps = ({crossword: {clues, direction, cursor: [cursorRow, curs
     isShaded,
     direction
   }
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {

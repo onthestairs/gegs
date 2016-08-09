@@ -1,7 +1,7 @@
 import * as gridUtils from '../grid/grid';
 
 const initialGrid = gridUtils.makeGrid(gridUtils.GRID_SIZE);
-const initialState = {
+const initialCrosswordState = {
   grid: initialGrid,
   clues: gridUtils.gridClueLocations(initialGrid),
   cursor: [0, 0],
@@ -54,7 +54,7 @@ const oppositeDirection = (direction) => {
   return mapping[direction];
 }
 
-const crossword = (state = initialState, action) => {
+const crossword = (state = initialCrosswordState, action) => {
 
   const {grid, cursor: [row, col], clueBank, direction} = state;
 
@@ -125,4 +125,34 @@ const crossword = (state = initialState, action) => {
   }
 }
 
-export default crossword
+const initialCrosswordsState = {
+  currentCrosswordId: 1,
+  crosswords: {
+    1: initialCrosswordState
+  }
+}
+
+const crosswords = (state = initialCrosswordsState, action) => {
+  const {currentCrosswordId, crosswords} = state;
+  switch (action.type) {
+    case 'CHANGE_CROSSWORD':
+
+      return state;
+    case 'NEW_CROSSWORD':
+
+        return state;
+    default:
+    {
+      const currentCrossword = crosswords[currentCrosswordId];
+      const newCurrentCrossword = crossword(currentCrossword, action);
+      let newCrosswords = crosswords;
+      newCrosswords[currentCrosswordId] = newCurrentCrossword;
+      return {
+        ...state,
+        crosswords: newCrosswords
+      }
+    }
+  }
+}
+
+export default crosswords;
