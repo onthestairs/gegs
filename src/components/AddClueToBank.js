@@ -17,13 +17,13 @@ const AddClueToBankComponent = ({ dispatch }) => {
         answerInput.value = '';
         clueInput.value = '';
       }}>
-        <input placeholder="Answer" ref={node => {
+        <input placeholder="Answer" className="answerInput" ref={node => {
           answerInput = node
         }} />
         <input placeholder="Clue" ref={node => {
           clueInput = node
         }} />
-        <button type="submit">
+        <button type="submit" className="addClueButton">
           Add Clue
         </button>
       </form>

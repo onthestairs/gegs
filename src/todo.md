@@ -1,7 +1,6 @@
 - Select from a pre-defined starting grid
 - "Undo"
 - Suggest words based on pattern Match
-- Save
 - everything immutable
 - grid controls (fix grid etc)
 - react router

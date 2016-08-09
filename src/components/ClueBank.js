@@ -10,6 +10,7 @@ const ClueBankComponent = ({clues}) => {
   const clueLis = clues.reverse().map(renderClue);
   return (
     <div>
+      <h3>Clue bank</h3>
       <AddClueToBank />
       <ul>{clueLis}</ul>
     </div>

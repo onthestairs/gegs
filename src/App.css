@@ -31,8 +31,34 @@ body,
   font-family: serif;
   min-width: 300px;
   text-align: left;
+  margin-top: 50px;
+  margin-right: 40px;
 }
 
+.clueBank h3 {
+  margin-top: 0px;
+}
+
+.clueBank form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.clueBank input {
+  width: 75%;
+  padding: 7px;
+  margin-bottom: 2px;
+}
+
+.clueBank .answerInput {
+  text-transform: uppercase;
+}
+
+.clueBank .addClueButton {
+  width: 100px;
+}
 
 /* Grid */
 
