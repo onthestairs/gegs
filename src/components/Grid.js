@@ -13,7 +13,7 @@ const keyMap = {
   'backspace': ['backspace']
 }
 
-const Grid = ({grid, cursor, onDirectionPressed, onEntryPressed, onBackspacePressed, onFixGridChange}) => {
+const Grid = ({grid, cursor, fixGrid, onDirectionPressed, onEntryPressed, onBackspacePressed, onFixGridChange}) => {
 
   const cells = grid.map((row, i) => {
     const rowCells = row.map((cell, j) => {
@@ -36,7 +36,7 @@ const Grid = ({grid, cursor, onDirectionPressed, onEntryPressed, onBackspacePres
         </div>
       </HotKeys>
       <label>
-        <input type="checkbox" onChange={onFixGridChange} value="fixGrid" /> Fix grid
+        <input type="checkbox" checked={fixGrid} onChange={onFixGridChange} value="fixGrid" /> Fix grid
       </label>
     </div>
   );
@@ -44,10 +44,11 @@ const Grid = ({grid, cursor, onDirectionPressed, onEntryPressed, onBackspacePres
 }
 
 const mapStateToProps = (state) => {
-  const {grid, cursor} = currentCrosswordState(state);
+  const {grid, cursor, fixGrid} = currentCrosswordState(state);
   return {
     grid,
-    cursor
+    cursor,
+    fixGrid
   }
 }
 

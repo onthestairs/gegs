@@ -22,7 +22,11 @@ export const getOtherRowCol = (row, col) => {
   return [GRID_SIZE-row-1, GRID_SIZE-col-1];
 }
 
-export const placeValue = (grid, row, col, value) => {
+export const placeValue = (grid, row, col, value, fixedGrid) => {
+  console.log('fixed grid', fixedGrid, 'val:', grid[row][col]);
+  if(fixedGrid && (grid[row][col] === '.' || value === '.')) {
+    return grid;
+  }
   let newGrid = Immutable.fromJS(grid).toJS();
   newGrid[row][col] = value;
   const [otherRow, otherCol] = getOtherRowCol(row, col);

@@ -4,6 +4,6 @@
 - "Undo"
 - Suggest words based on pattern Match
 - everything immutable
-- grid controls (fix grid etc)
 - react router
 - highlight "unfinished" bits
+- refactor crosswords reducers and grid helpers

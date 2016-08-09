@@ -57,7 +57,7 @@ const oppositeDirection = (direction) => {
 
 const crossword = (state = initialCrosswordState, action) => {
 
-  const {grid, cursor: [row, col], clueBank, direction} = state;
+  const {grid, cursor: [row, col], clueBank, direction, fixGrid} = state;
 
   switch (action.type) {
 
@@ -98,7 +98,7 @@ const crossword = (state = initialCrosswordState, action) => {
 
     case 'SET_GRID_VALUE':
     {
-        const newGrid = gridUtils.placeValue(grid, row, col, action.value);
+        const newGrid = gridUtils.placeValue(grid, row, col, action.value, fixGrid);
         const clues = gridUtils.gridClueLocations(newGrid);
         const cluesWithClues = addClues(clues, clueBank);
         const delta = DIR_TO_DELTA[direction];
