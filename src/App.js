@@ -8,20 +8,24 @@ import { createStore, compose } from 'redux'
 import crosswordApp from './reducers'
 import DevTools from './components/DevTools';
 
+import persistState from 'redux-localstorage'
+
 
 const useDevTools = true;
 
-let store;
+let enhancer;
 if(useDevTools) {
-
-  const enhancer = compose(
-    DevTools.instrument()
+  enhancer = compose(
+    DevTools.instrument(),
+    persistState(),
   );
-  store = createStore(crosswordApp, enhancer);
-
 } else {
-  store = createStore(crosswordApp);
+  enhancer = compose(
+    persistState(),
+  );
 }
+
+const store = createStore(crosswordApp, enhancer);
 
 class App extends Component {
 
