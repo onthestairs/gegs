@@ -16,12 +16,12 @@ const useDevTools = false;
 let enhancer;
 if(useDevTools) {
   enhancer = compose(
+    persistState(['crosswords']),
     DevTools.instrument(),
-    persistState(),
   );
 } else {
   enhancer = compose(
-    persistState(),
+    persistState(['crosswords']),
   );
 }
 

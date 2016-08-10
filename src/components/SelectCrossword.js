@@ -4,7 +4,7 @@ import { selectCrossword } from '../actions'
 
 const SelectCrosswordComponent = ({crosswords, dispatch}) => {
 
-  const options = crosswords.map(id => <option key={id}>{id}</option>);
+  const options = crosswords.map(([id, name]) => <option key={id} value={id}>{name}</option>);
 
   let crossowordSelectorId;
 
@@ -27,9 +27,12 @@ const SelectCrosswordComponent = ({crosswords, dispatch}) => {
 }
 
 const mapStateToProps = ({crosswords: {crosswords}}) => {
-  const crosswordIds = Object.keys(crosswords);
+  let crosswordIdName = [];
+  Object.keys(crosswords).forEach((crosswordId) => {
+    crosswordIdName.push([crosswordId, crosswords[crosswordId].name]);
+  });
   return {
-    crosswords: crosswordIds
+    crosswords: crosswordIdName
   }
 }
 

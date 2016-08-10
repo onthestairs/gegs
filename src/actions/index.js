@@ -59,3 +59,10 @@ export const setFixGridStatus = (fixGridstatus) => {
     fixGridstatus
   }
 }
+
+export const changeCrosswordName = (name) => {
+  return {
+    type: 'CHANGE_CROSSWORD_NAME',
+    name
+  }
+}

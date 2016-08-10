@@ -2,8 +2,10 @@ import React from 'react';
 import Cell from './Cell';
 import * as gridUtils from '../grid/grid';
 import { connect } from 'react-redux';
-import {setGridValue, moveGridCursor, moveGridBack, setFixGridStatus} from '../actions';
+import {setGridValue, moveGridCursor, moveGridBack} from '../actions';
 import {currentCrosswordState} from '../reducers/utils';
+import Name from './grid/Name';
+import Controls from './grid/Controls';
 
 import {HotKeys} from 'react-hotkeys';
 
@@ -13,7 +15,7 @@ const keyMap = {
   'backspace': ['backspace']
 }
 
-const Grid = ({grid, cursor, fixGrid, onDirectionPressed, onEntryPressed, onBackspacePressed, onFixGridChange}) => {
+const Grid = ({grid, cursor, onDirectionPressed, onEntryPressed, onBackspacePressed}) => {
 
   const cells = grid.map((row, i) => {
     const rowCells = row.map((cell, j) => {
@@ -30,25 +32,23 @@ const Grid = ({grid, cursor, fixGrid, onDirectionPressed, onEntryPressed, onBack
 
   return (
     <div>
+      <Name />
       <HotKeys keyMap={keyMap} handlers={handlers}>
         <div className="grid">
           {cells}
         </div>
       </HotKeys>
-      <label>
-        <input type="checkbox" checked={fixGrid} onChange={onFixGridChange} value="fixGrid" /> Fix grid
-      </label>
+      <Controls />
     </div>
   );
 
 }
 
 const mapStateToProps = (state) => {
-  const {grid, cursor, fixGrid} = currentCrosswordState(state);
+  const {grid, cursor} = currentCrosswordState(state);
   return {
     grid,
-    cursor,
-    fixGrid
+    cursor
   }
 }
 
@@ -76,9 +76,6 @@ const mapDispatchToProps = (dispatch) => {
       e.preventDefault();
       dispatch(moveGridBack());
     },
-    onFixGridChange: (e) => {
-      dispatch(setFixGridStatus(e.target.checked));
-    }
   }
 }
 

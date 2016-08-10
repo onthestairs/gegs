@@ -89,11 +89,33 @@ body,
   justify-content: center;
   align-items: center;
 }
+.gridHolder .nameGridHolder {
+  display: flex;
+  justify-content: center;
+}
+div.gridHolder > div > div:nth-child(2):focus { /* grid focussed */
+  outline:none;
+}
+.gridHolder .nameGrid {
+  font-family: serif;
+  border: 0;
+  border-bottom: 1px solid grey;
+  color: grey;
+  font-size: 24px;
+  margin-bottom: 30px;
+  font-style: italic;
+}
+.gridHolder .nameGrid:focus {
+  outline:none;
+}
+
 
 .grid {
   display: flex;
   flex-direction: column;
   border: 1px solid black;
+  user-select: none;
+  cursor: pointer;
 }
 
 .row {
