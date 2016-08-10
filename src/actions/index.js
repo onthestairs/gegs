@@ -40,6 +40,13 @@ export const addClueToBank = (answer, clue) => {
   }
 }
 
+export const deleteClueFromBank = (clueId) => {
+  return {
+    type: 'DELETE_CLUE_FROM_BANK',
+    clueId
+  }
+}
+
 export const selectCrossword = (crosswordId) => {
   return {
     type: 'SELECT_CROSSWORD',

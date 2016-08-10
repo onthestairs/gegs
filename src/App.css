@@ -61,6 +61,11 @@ body,
   margin-top: 0px;
 }
 
+.clueBank .deleteClue {
+  cursor: pointer;
+  color: #999;
+}
+
 .clueBank form {
   display: flex;
   flex-direction: column;

@@ -1,5 +1,3 @@
-- Name crosswords
-- Delete from clue bank
 - Select from a pre-defined starting grid
 - "Undo"
 - Suggest words based on pattern Match
@@ -7,3 +5,4 @@
 - react router
 - highlight "unfinished" bits
 - refactor crosswords reducers and grid helpers
+- figure out way to auto-compute with-clues (https://github.com/reactjs/reselect)

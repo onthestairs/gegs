@@ -1,3 +1,4 @@
+import uuid from 'uuid';
 import * as gridUtils from '../grid/grid';
 
 const initialGrid = gridUtils.makeGrid(gridUtils.GRID_SIZE);
@@ -113,7 +114,11 @@ const crossword = (state = initialCrosswordState, action) => {
     }
 
     case 'ADD_CLUE_TO_BANK':
-        const newClueBankClue = {clue: action.clue, answer: action.answer}
+        const newClueBankClue = {
+          clue: action.clue,
+          answer: action.answer,
+          id: uuid.v4()
+        }
         const newClueBank = [...clueBank, newClueBankClue];
         const newCluesWithClues = addClues(state.clues, newClueBank);
         return {
@@ -121,6 +126,17 @@ const crossword = (state = initialCrosswordState, action) => {
           clueBank: newClueBank,
           clues: newCluesWithClues
         }
+
+    case 'DELETE_CLUE_FROM_BANK':
+    {
+      const newClueBank = clueBank.filter(clue => clue.id !== action.clueId);
+      const newCluesWithClues = addClues(state.clues, newClueBank);
+      return {
+        ...state,
+        clueBank: newClueBank,
+        clues: newCluesWithClues
+      }
+    }
 
     case 'SET_FIX_GRID_STATUS':
 
@@ -141,11 +157,12 @@ const crossword = (state = initialCrosswordState, action) => {
   }
 }
 
+const crosswordId = uuid.v4();
 const initialCrosswordsState = {
-  currentCrosswordId: 1,
+  currentCrosswordId: crosswordId,
   crosswords: {
-    1: initialCrosswordState,
-    2: initialCrosswordState
+    [crosswordId]: initialCrosswordState,
+    // 2: initialCrosswordState
   }
 }
 
