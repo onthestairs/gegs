@@ -60,6 +60,13 @@ export const newCrossword = () => {
   }
 }
 
+export const deleteCrossword = (crosswordId) => {
+  return {
+    type: 'DELETE_CROSSWORD',
+    crosswordId
+  }
+}
+
 export const setFixGridStatus = (fixGridstatus) => {
   return {
     type: 'SET_FIX_GRID_STATUS',
@@ -71,5 +78,12 @@ export const changeCrosswordName = (name) => {
   return {
     type: 'CHANGE_CROSSWORD_NAME',
     name
+  }
+}
+
+export const setNavOpen = (isOpen) => {
+  return {
+    type: 'SET_NAV_OPEN',
+    isOpen
   }
 }

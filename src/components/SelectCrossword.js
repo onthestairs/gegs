@@ -1,27 +1,27 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { selectCrossword } from '../actions'
+import { selectCrossword, deleteCrossword } from '../actions'
 
 const SelectCrosswordComponent = ({crosswords, dispatch}) => {
 
-  const options = crosswords.map(([id, name]) => <option key={id} value={id}>{name}</option>);
-
-  let crossowordSelectorId;
+  const crosswordLis = crosswords.map(([id, name]) => {
+      return (
+        <li key={id} className="navCrossword">
+          <span onClick={(e) => dispatch(selectCrossword(id))}>{name}</span>
+          <br />
+          <small className="deleteCrossword" onClick={(e) => {
+              if(confirm("Are you sure you want to delete this crossword?")) {
+                dispatch(deleteCrossword(id));
+              }
+            }}>
+            (Delete)
+          </small>
+        </li>
+      );
+  });
 
   return (
-    <form onSubmit={e => {
-      e.preventDefault()
-      dispatch(selectCrossword(crossowordSelectorId.value));
-    }}>
-      <select ref={node => {
-        crossowordSelectorId = node
-      }}>
-        {options}
-      </select>
-      <button type="submit" className="selectCrosswordButton">
-        Go
-      </button>
-    </form>
+    <ul>{crosswordLis}</ul>
   )
 
 }

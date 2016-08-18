@@ -139,7 +139,8 @@ const initialCrosswordsState = {
   crosswords: {
     [crosswordId]: initialCrosswordState,
     // 2: initialCrosswordState
-  }
+  },
+  isNavOpen: false
 }
 
 const crosswords = (state = initialCrosswordsState, action) => {
@@ -150,9 +151,34 @@ const crosswords = (state = initialCrosswordsState, action) => {
         ...state,
         currentCrosswordId: action.crosswordId
       };
+    case 'DELETE_CROSSWORD':
+    {
+      let newCrosswords = crosswords;
+      delete newCrosswords[action.crosswordId];
+      const newCurrentCrosswordId = Object.keys(newCrosswords)[0];
+      return {
+        ...state,
+        currentCrosswordId: newCurrentCrosswordId,
+        crosswords: newCrosswords
+      };
+    }
     case 'NEW_CROSSWORD':
-
-        return state;
+    {
+        const crosswordId = uuid.v4();
+        return {
+          ...state,
+          currentCrosswordId: crosswordId,
+          crosswords: {
+            ...crosswords,
+            [crosswordId]: initialCrosswordState,
+          }
+        }
+    }
+    case 'SET_NAV_OPEN':
+      return {
+        ...state,
+        isNavOpen: action.isOpen
+      };
     default:
     {
       const currentCrossword = crosswords[currentCrosswordId];
