@@ -2,7 +2,5 @@
 - "Undo"
 - Suggest words based on pattern Match
 - everything immutable
-- react router
 - highlight "unfinished" bits
 - refactor crosswords reducers and grid helpers
-- figure out way to auto-compute with-clues (https://github.com/reactjs/reselect)

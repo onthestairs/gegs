@@ -11,7 +11,8 @@ const renderClues = (clues) => {
     } else {
       lengths = [clue.gridAnswer.length];
     }
-    return <li value={clue.n} key={clue.n + clue.direction}> {clue.clue} ({lengths.join(",")})</li>
+    const classes = !clue.answer ? 'noClue' : '';
+    return <li value={clue.n} key={clue.n + clue.direction} className={classes}> {clue.clue} ({lengths.join(",")})</li>
   });
 }
 

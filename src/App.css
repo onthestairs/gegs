@@ -197,3 +197,7 @@ div.gridHolder > div > div:nth-child(2):focus { /* grid focussed */
 .clueList h3 {
   margin-top: 0px;
 }
+
+.clueList .noClue {
+  color: #ccc;
+}
