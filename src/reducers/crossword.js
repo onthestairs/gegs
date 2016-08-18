@@ -28,25 +28,6 @@ const moveCursor = ([rD, cD], [row, col]) => {
   ]
 }
 
-const addClues = (clues, clueBank) => {
-  return clues.map(clue => {
-    const answer = clue.gridAnswer.toUpperCase();
-    const filteredClueBank = clueBank.filter(bankClue => {
-      const bankClueAnswer = bankClue.answer.replace(/ /g, '');
-      return bankClueAnswer === answer;
-    });
-    if(filteredClueBank.length > 0) {
-      return {
-        ...clue,
-        clue: filteredClueBank[0].clue,
-        answer: filteredClueBank[0].answer
-      }
-    } else {
-      return clue
-    }
-  });
-}
-
 const oppositeDirection = (direction) => {
   const mapping = {
     'down': 'up',
@@ -102,13 +83,12 @@ const crossword = (state = initialCrosswordState, action) => {
     {
         const newGrid = gridUtils.placeValue(grid, row, col, action.value, fixGrid);
         const clues = gridUtils.gridClueLocations(newGrid);
-        const cluesWithClues = addClues(clues, clueBank);
         const delta = DIR_TO_DELTA[direction];
         const newCursor = moveCursor(delta, [row, col]);
         return {
           ...state,
           grid: newGrid,
-          clues: cluesWithClues,
+          clues: clues,
           cursor: newCursor
         }
     }
@@ -120,21 +100,17 @@ const crossword = (state = initialCrosswordState, action) => {
           id: uuid.v4()
         }
         const newClueBank = [...clueBank, newClueBankClue];
-        const newCluesWithClues = addClues(state.clues, newClueBank);
         return {
           ...state,
           clueBank: newClueBank,
-          clues: newCluesWithClues
         }
 
     case 'DELETE_CLUE_FROM_BANK':
     {
       const newClueBank = clueBank.filter(clue => clue.id !== action.clueId);
-      const newCluesWithClues = addClues(state.clues, newClueBank);
       return {
         ...state,
         clueBank: newClueBank,
-        clues: newCluesWithClues
       }
     }
 
