@@ -22,9 +22,13 @@ export const getOtherRowCol = (row, col) => {
   return [GRID_SIZE-row-1, GRID_SIZE-col-1];
 }
 
+const skipDueToFixedGrid = (fixedGrid, currentValue, newValue) => {
+  return (fixedGrid && (newValue === '.' || currentValue === '.'))
+}
+
 export const placeValue = (grid, row, col, value, fixedGrid) => {
   console.log('fixed grid', fixedGrid, 'val:', grid[row][col]);
-  if(fixedGrid && (grid[row][col] === '.' || value === '.')) {
+  if (skipDueToFixedGrid(fixedGrid, grid[row][col], value)) {
     return grid;
   }
   let newGrid = Immutable.fromJS(grid).toJS();

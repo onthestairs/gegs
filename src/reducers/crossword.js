@@ -69,7 +69,7 @@ const crossword = (state = initialCrosswordState, action) => {
 
     case 'MOVE_GRID_BACK':
     {
-      const newGrid = gridUtils.placeValue(grid, row, col, ' ');
+      const newGrid = gridUtils.placeValue(grid, row, col, ' ', fixGrid);
       const delta = DIR_TO_DELTA[oppositeDirection(direction)];
       const newCursor = moveCursor(delta, [row, col]);
       return {
