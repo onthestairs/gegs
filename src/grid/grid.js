@@ -27,7 +27,6 @@ const skipDueToFixedGrid = (fixedGrid, currentValue, newValue) => {
 };
 
 export const placeValue = (grid, row, col, value, fixedGrid) => {
-  console.log("fixed grid", fixedGrid, "val:", grid[row][col]);
   if (skipDueToFixedGrid(fixedGrid, grid[row][col], value)) {
     return grid;
   }
