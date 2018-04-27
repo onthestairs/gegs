@@ -38,6 +38,31 @@ const oppositeDirection = (direction) => {
   return mapping[direction];
 }
 
+const switchCursorDirection = (currentDirection) => {
+    return  (currentDirection === 'right' ? 'down' : 'right')
+}
+
+// Tells us if a given square is available to be written in (i.e. not blacked
+// out). Returns false for off grid squares
+const isOpen = (grid, row, col) => {
+  const rowInRange =  (row >= 0 && row < gridUtils.GRID_SIZE)
+  const colInRange = (col >= 0 && col < gridUtils.GRID_SIZE)
+  return rowInRange && colInRange && !(grid[row][col] === '.')
+}
+
+// Attempt to place the cursor in a direction aligning with way the word the
+// user clicked on is going - that way they don't have to correct it.
+const cursorDirection = (grid, row, col) => {
+  if (!isOpen(grid, row, col + 1)) {
+    return  "down" // Down clue
+  } else if (!isOpen(grid, row + 1, col)) {
+    return "right" // Across clue
+  }
+  // Now we must be in an across clue AND a down clue. If we're at the start of
+  // a down clue, return down, else return across.
+  return isOpen(grid, row -1, col) ? "right" : "down"
+}
+
 const crossword = (state = initialCrosswordState, action) => {
 
   const {grid, cursor: [row, col], clueBank, direction, fixGrid} = state;
@@ -47,7 +72,12 @@ const crossword = (state = initialCrosswordState, action) => {
     case 'SET_GRID_CURSOR':
     {
       const {cursor: [newRow, newCol]} = action;
-      const newDirection = (newRow === row) && (newCol === col) ? (direction === 'right' ? 'down' : 'right') : direction;
+      var newDirection = direction
+      if ((newRow === row) && (newCol === col)) {
+        newDirection = switchCursorDirection(direction)
+      } else {
+        newDirection = cursorDirection(grid, newRow, newCol)
+      }
       return {
         ...state,
         cursor: [newRow, newCol],
