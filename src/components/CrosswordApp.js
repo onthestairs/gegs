@@ -1,8 +1,8 @@
-import React from 'react';
-import Clues from './Clues';
-import Grid from './Grid';
-import ClueBank from './ClueBank';
-import Navigation from './Navigation';
+import React from "react";
+import Clues from "./Clues";
+import Grid from "./Grid";
+import ClueBank from "./ClueBank";
+import Navigation from "./Navigation";
 
 const CrosswordApp = () => {
   return (
@@ -16,11 +16,11 @@ const CrosswordApp = () => {
           <Grid />
         </div>
         <div className="cluesHolder">
-           <Clues />
+          <Clues />
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default CrosswordApp
+export default CrosswordApp;

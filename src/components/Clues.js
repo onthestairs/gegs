@@ -1,26 +1,30 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import {currentCrosswordState} from '../reducers/utils';
-import {getPopulatedClues} from '../selectors';
+import React from "react";
+import { connect } from "react-redux";
+import { currentCrosswordState } from "../reducers/utils";
+import { getPopulatedClues } from "../selectors";
 
-const renderClues = (clues) => {
+const renderClues = clues => {
   return clues.map(clue => {
     let lengths;
-    if(clue.answer) {
+    if (clue.answer) {
       lengths = clue.answer.split(" ").map(x => x.length);
     } else {
       lengths = [clue.gridAnswer.length];
     }
-    const classes = !clue.answer ? 'noClue' : '';
-    return <li value={clue.n} key={clue.n + clue.direction} className={classes}> {clue.clue} ({lengths.join(",")})</li>
+    const classes = !clue.answer ? "noClue" : "";
+    return (
+      <li value={clue.n} key={clue.n + clue.direction} className={classes}>
+        {" "}
+        {clue.clue} ({lengths.join(",")})
+      </li>
+    );
   });
-}
+};
 
-const CluesComponent = ({clues}) => {
-
-  const acrossClues = clues.filter(clue => clue.direction === 'across');
+const CluesComponent = ({ clues }) => {
+  const acrossClues = clues.filter(clue => clue.direction === "across");
   const acrossCluesLis = renderClues(acrossClues);
-  const downClues = clues.filter(clue => clue.direction === 'down');
+  const downClues = clues.filter(clue => clue.direction === "down");
   const downCluesLis = renderClues(downClues);
   return (
     <div>
@@ -36,21 +40,16 @@ const CluesComponent = ({clues}) => {
       </div>
     </div>
   );
+};
 
-}
-
-const mapStateToProps = (state, {value, row, col}) => {
+const mapStateToProps = (state, { value, row, col }) => {
   const crossword = currentCrosswordState(state);
   const clues = getPopulatedClues(crossword);
   return {
     clues
-  }
-}
+  };
+};
 
-const Clues = connect(
-  mapStateToProps,
-  {}
-)(CluesComponent);
-
+const Clues = connect(mapStateToProps, {})(CluesComponent);
 
 export default Clues;

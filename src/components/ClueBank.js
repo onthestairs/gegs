@@ -1,8 +1,8 @@
-import React from 'react';
-import { connect } from 'react-redux'
-import {deleteClueFromBank} from '../actions';
-import AddClueToBank from './AddClueToBank';
-import {currentCrosswordState} from '../reducers/utils';
+import React from "react";
+import { connect } from "react-redux";
+import { deleteClueFromBank } from "../actions";
+import AddClueToBank from "./AddClueToBank";
+import { currentCrosswordState } from "../reducers/utils";
 
 const renderClue = (clue, dispatch) => {
   return (
@@ -11,14 +11,17 @@ const renderClue = (clue, dispatch) => {
       <br />
       <span>{clue.clue}</span>
       <br />
-      <a className="deleteClue" onClick={(e) => dispatch(deleteClueFromBank(clue.id))}>
+      <a
+        className="deleteClue"
+        onClick={e => dispatch(deleteClueFromBank(clue.id))}
+      >
         <small>(Delete)</small>
       </a>
     </li>
   );
-}
+};
 
-const ClueBankComponent = ({clues, dispatch}) => {
+const ClueBankComponent = ({ clues, dispatch }) => {
   const clueLis = clues.reverse().map(clue => renderClue(clue, dispatch));
   return (
     <div>
@@ -26,20 +29,16 @@ const ClueBankComponent = ({clues, dispatch}) => {
       <AddClueToBank />
       <ul>{clueLis}</ul>
     </div>
-  )
-}
+  );
+};
 
-const mapStateToProps = (state) => {
-  const {clueBank} = currentCrosswordState(state);
+const mapStateToProps = state => {
+  const { clueBank } = currentCrosswordState(state);
   return {
     clues: clueBank
-  }
-}
+  };
+};
 
-
-const ClueBank = connect(
-  mapStateToProps,
-)(ClueBankComponent);
-
+const ClueBank = connect(mapStateToProps)(ClueBankComponent);
 
 export default ClueBank;
