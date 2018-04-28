@@ -79,7 +79,8 @@ export const isClueBankInputAnswerInClueBank = createSelector(
   (clueBank, clueBankInput) => {
     const matchingClues = clueBank.filter(bankClue => {
       const bankClueAnswer = stripAnswer(bankClue.answer).toUpperCase();
-      const clueInputAnswer = stripAnswer(clueBankInput.answer).toUpperCase();
+      const clueBankInputAnswer = clueBankInput ? clueBankInput.answer : "";
+      const clueInputAnswer = clueBankInputAnswer.toUpperCase();
       return bankClueAnswer === clueInputAnswer;
     });
     return matchingClues.length > 0;
