@@ -3,19 +3,43 @@ import { connect } from "react-redux";
 import { currentCrosswordState } from "../reducers/utils";
 import { getPopulatedClues } from "../selectors";
 
+const makeLengthString = answer => {
+  const words = answer.split(" ");
+  const wordStrings = words.map(word => {
+    const bits = word.split("-");
+    return bits.map(bit => bit.length).join("-");
+  });
+  return "(" + wordStrings.join(",") + ")";
+};
+
 const renderClues = clues => {
   return clues.map(clue => {
-    let lengths;
-    if (clue.answer) {
-      lengths = clue.answer.split(" ").map(x => x.length);
-    } else {
-      lengths = [clue.gridAnswer.length];
+    // we need to decide on these three things but it depends on the type of clue
+    let clueText = "";
+    let lengthString = "";
+    let classes = "";
+
+    switch (clue.type) {
+      // this is a clue where we actually want to show the surface
+      case "single":
+      case "start":
+        clueText = clue.clue;
+        lengthString = makeLengthString(clue.answer);
+        break;
+      // a spillover clue so reference the original
+      case "spillover":
+        clueText = `See ${clue.startN} ${clue.startDirection}`;
+        classes = "spillover";
+        break;
+      case "missing":
+        classes = "missing";
+        lengthString = makeLengthString(clue.gridAnswer.replace(/( |-)/g, "a"));
+        break;
+      default:
     }
-    const classes = !clue.answer ? "noClue" : "";
     return (
       <li value={clue.n} key={clue.n + clue.direction} className={classes}>
-        {" "}
-        {clue.clue} ({lengths.join(",")})
+        {clueText} {lengthString}
       </li>
     );
   });

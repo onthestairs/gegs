@@ -11,7 +11,7 @@ const SelectCrosswordComponent = ({ crosswords, dispatch }) => {
         <small
           className="deleteCrossword"
           onClick={e => {
-            if (confirm("Are you sure you want to delete this crossword?")) {
+            if (window.confirm("Are you sure you want to delete this crossword?")) {
               dispatch(deleteCrossword(id));
             }
           }}
