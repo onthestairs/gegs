@@ -1,5 +1,7 @@
 import uuid from "uuid";
+
 import * as gridUtils from "../grid/grid";
+import { stripAnswer } from "../utils";
 
 const initialGrid = gridUtils.makeGrid(gridUtils.GRID_SIZE);
 const initialCrosswordState = {
@@ -9,7 +11,11 @@ const initialCrosswordState = {
   direction: "right",
   name: "Unnamed",
   fixGrid: false,
-  clueBank: [{ answer: "AUSTIN", clue: "Absolute badman!" }]
+  clueBank: [{ answer: "AUSTIN", clue: "Absolute badman!" }],
+  clueBankInput: {
+    clue: "",
+    answer: ""
+  }
 };
 
 const DIR_TO_DELTA = {
@@ -62,19 +68,11 @@ const cursorDirection = (grid, row, col) => {
 };
 
 const crossword = (state = initialCrosswordState, action) => {
-  const {
-    grid,
-    cursor: [row, col],
-    clueBank,
-    direction,
-    fixGrid
-  } = state;
+  const { grid, cursor: [row, col], clueBank, direction, fixGrid } = state;
 
   switch (action.type) {
     case "SET_GRID_CURSOR": {
-      const {
-        cursor: [newRow, newCol]
-      } = action;
+      const { cursor: [newRow, newCol] } = action;
       var newDirection = direction;
       if (newRow === row && newCol === col) {
         newDirection = switchCursorDirection(direction);
@@ -104,7 +102,7 @@ const crossword = (state = initialCrosswordState, action) => {
 
     case "MOVE_GRID_BACK": {
       const newGrid = gridUtils.placeValue(grid, row, col, " ", fixGrid);
-      const clues = gridUtils.gridClueLocations(newGrid)
+      const clues = gridUtils.gridClueLocations(newGrid);
       const delta = DIR_TO_DELTA[oppositeDirection(direction)];
       const newCursor = moveCursor(delta, [row, col]);
       return {
@@ -134,6 +132,31 @@ const crossword = (state = initialCrosswordState, action) => {
       };
     }
 
+    case "CHANGE_CLUE_BANK_CLUE": {
+      const newClueBankInput = {
+        ...state.clueBankInput,
+        clue: action.clue
+      };
+      return {
+        ...state,
+        clueBankInput: newClueBankInput
+      };
+    }
+
+    case "CHANGE_CLUE_BANK_ANSWER": {
+      const strictAnswer = action.answer
+        .replace(/[^a-zA-Z -]/g, "")
+        .toUpperCase();
+      const newClueBankInput = {
+        ...state.clueBankInput,
+        answer: strictAnswer
+      };
+      return {
+        ...state,
+        clueBankInput: newClueBankInput
+      };
+    }
+
     case "ADD_CLUE_TO_BANK":
       const newClueBankClue = {
         clue: action.clue,
@@ -141,10 +164,57 @@ const crossword = (state = initialCrosswordState, action) => {
         id: uuid.v4()
       };
       const newClueBank = [...clueBank, newClueBankClue];
+      const newClueBankInput = {
+        clue: "",
+        answer: ""
+      };
       return {
         ...state,
+        clueBankInput: newClueBankInput,
         clueBank: newClueBank
       };
+
+    case "EDIT_CLUE_IN_BANK": {
+      const newClueBankClue = {
+        clue: action.clue,
+        answer: action.answer,
+        id: uuid.v4()
+      };
+      const newClueBank = clueBank.map(clue => {
+        const clueAnswer = stripAnswer(clue.answer).toUpperCase();
+        const actionAnswer = stripAnswer(action.answer).toUpperCase();
+        if (clueAnswer === actionAnswer) {
+          return {
+            ...clue,
+            clue: action.clue,
+            answer: action.answer
+          };
+        } else {
+          return clue;
+        }
+      });
+      const newClueBankInput = {
+        clue: "",
+        answer: ""
+      };
+      return {
+        ...state,
+        clueBankInput: newClueBankInput,
+        clueBank: newClueBank
+      };
+    }
+
+    case "START_EDITING_CLUE_IN_BANK": {
+      const clue = clueBank.filter(clue => clue.id === action.clueId)[0];
+      const newClueBankInput = {
+        clue: clue.clue,
+        answer: clue.answer
+      };
+      return {
+        ...state,
+        clueBankInput: newClueBankInput
+      };
+    }
 
     case "DELETE_CLUE_FROM_BANK": {
       const newClueBank = clueBank.filter(clue => clue.id !== action.clueId);

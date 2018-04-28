@@ -84,9 +84,12 @@ body,
   margin-top: 0px;
 }
 
-.clueBank .deleteClue {
-  cursor: pointer;
+.clueBank .clueActions {
   color: #999;
+}
+
+.clueBank .clueActions a {
+  cursor: pointer;
 }
 
 .clueBank form {

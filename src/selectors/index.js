@@ -4,6 +4,7 @@ import { pairs, nonZeroSplits, addMissing, stripAnswer } from "../utils";
 
 const getClues = ({ clues }) => clues;
 const getClueBank = ({ clueBank }) => clueBank;
+const getClueBankInput = ({ clueBankInput }) => clueBankInput;
 
 // populateClues will take the clues on the grid and match them up
 // with the clues in the clue bank. returns an array of numbered clues
@@ -71,4 +72,16 @@ export const populateClues = (gridClues, clueBank) => {
 export const getPopulatedClues = createSelector(
   [getClues, getClueBank],
   (clues, clueBank) => populateClues(clues, clueBank)
+);
+
+export const isClueBankInputAnswerInClueBank = createSelector(
+  [getClueBank, getClueBankInput],
+  (clueBank, clueBankInput) => {
+    const matchingClues = clueBank.filter(bankClue => {
+      const bankClueAnswer = stripAnswer(bankClue.answer).toUpperCase();
+      const clueInputAnswer = stripAnswer(clueBankInput.answer).toUpperCase();
+      return bankClueAnswer === clueInputAnswer;
+    });
+    return matchingClues.length > 0;
+  }
 );

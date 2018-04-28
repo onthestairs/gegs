@@ -32,11 +32,40 @@ export const moveGridBack = () => {
   };
 };
 
+export const changeClueBankAnswer = answer => {
+  return {
+    type: "CHANGE_CLUE_BANK_ANSWER",
+    answer
+  };
+};
+
+export const changeClueBankClue = clue => {
+  return {
+    type: "CHANGE_CLUE_BANK_CLUE",
+    clue
+  };
+};
+
 export const addClueToBank = (answer, clue) => {
   return {
     type: "ADD_CLUE_TO_BANK",
     answer,
     clue
+  };
+};
+
+export const editClueInBank = (answer, clue) => {
+  return {
+    type: "EDIT_CLUE_IN_BANK",
+    answer,
+    clue
+  };
+};
+
+export const startEditingClueInBank = clueId => {
+  return {
+    type: "START_EDITING_CLUE_IN_BANK",
+    clueId
   };
 };
 

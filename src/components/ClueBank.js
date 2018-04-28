@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { deleteClueFromBank } from "../actions";
+import { deleteClueFromBank, startEditingClueInBank } from "../actions";
 import AddClueToBank from "./AddClueToBank";
 import { currentCrosswordState } from "../reducers/utils";
 
@@ -11,12 +11,21 @@ const renderClue = (clue, dispatch) => {
       <br />
       <span>{clue.clue}</span>
       <br />
-      <a
-        className="deleteClue"
-        onClick={e => dispatch(deleteClueFromBank(clue.id))}
-      >
-        <small>(Delete)</small>
-      </a>
+      <small className="clueActions">
+        <a
+          className="editClue"
+          onClick={e => dispatch(startEditingClueInBank(clue.id))}
+        >
+          Edit
+        </a>{" "}
+        /{" "}
+        <a
+          className="deleteClue"
+          onClick={e => dispatch(deleteClueFromBank(clue.id))}
+        >
+          Delete
+        </a>
+      </small>
     </li>
   );
 };

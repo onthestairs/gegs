@@ -1,46 +1,62 @@
 import React from "react";
 import { connect } from "react-redux";
-import { addClueToBank } from "../actions";
 
-const AddClueToBankComponent = ({ dispatch }) => {
-  let answerInput, clueInput;
+import {
+  addClueToBank,
+  editClueInBank,
+  changeClueBankAnswer,
+  changeClueBankClue
+} from "../actions";
+import { isClueBankInputAnswerInClueBank } from "../selectors";
+import { currentCrosswordState } from "../reducers/utils";
+
+const AddClueToBankComponent = ({ clue, answer, alreadyInBank, dispatch }) => {
+  const buttonText = alreadyInBank ? "Edit Clue" : "Add Clue";
+  const submitAction = alreadyInBank ? editClueInBank : addClueToBank;
 
   return (
     <div>
       <form
         onSubmit={e => {
           e.preventDefault();
-          if (!answerInput.value.trim() || !clueInput.value.trim()) {
+          if (!answer.trim() || !clue.trim()) {
             return;
           }
-          dispatch(
-            addClueToBank(answerInput.value.toUpperCase(), clueInput.value)
-          );
-          answerInput.value = "";
-          clueInput.value = "";
+          dispatch(submitAction(answer.toUpperCase(), clue));
         }}
       >
         <input
           placeholder="Answer"
           className="answerInput"
-          ref={node => {
-            answerInput = node;
-          }}
+          value={answer}
+          onChange={e => dispatch(changeClueBankAnswer(e.target.value))}
         />
         <input
           placeholder="Clue"
-          ref={node => {
-            clueInput = node;
-          }}
+          value={clue}
+          onChange={e => dispatch(changeClueBankClue(e.target.value))}
         />
         <button type="submit" className="addClueButton">
-          Add Clue
+          {buttonText}
         </button>
       </form>
     </div>
   );
 };
 
-const AddClueToBank = connect()(AddClueToBankComponent);
+const mapStateToProps = state => {
+  const crossword = currentCrosswordState(state);
+  const alreadyInBank = isClueBankInputAnswerInClueBank(crossword);
+  const { clueBankInput } = crossword;
+  const clue = clueBankInput ? clueBankInput.clue : "";
+  const answer = clueBankInput ? clueBankInput.answer : "";
+  return {
+    clue,
+    answer,
+    alreadyInBank
+  };
+};
+
+const AddClueToBank = connect(mapStateToProps)(AddClueToBankComponent);
 
 export default AddClueToBank;
