@@ -19,6 +19,13 @@ export const setGridValue = value => {
   };
 };
 
+export const insertTextAtCursorClue = text => {
+  return {
+    type: "INSERT_TEXT_AT_CURSOR_CLUE",
+    text
+  };
+};
+
 export const moveGridDirection = direction => {
   return {
     type: "MOVE_GRID_DIRECTION",
@@ -100,6 +107,13 @@ export const setFixGridStatus = fixGridstatus => {
   return {
     type: "SET_FIX_GRID_STATUS",
     fixGridstatus
+  };
+};
+
+export const setShowSuggestsionsStatus = showSuggestsionsStatus => {
+  return {
+    type: "SET_SHOW_SUGGESTIONS_STATUS",
+    showSuggestsionsStatus
   };
 };
 

@@ -150,13 +150,90 @@ export const gridClueLocations = grid => {
 
 export const positionToNumber = (clues, [row, col]) => {
   const goodClues = clues.filter(clue => {
-    const {
-      position: [clueRow, clueCol]
-    } = clue;
+    const { position: [clueRow, clueCol] } = clue;
     return clueRow === row && clueCol === col;
   });
   if (goodClues.length > 0) {
     return goodClues[0].n;
   }
   return null;
+};
+
+const findPositionClueStart = (grid, direction, [row, col]) => {
+  if (direction === "right") {
+    while (col > 0 && grid[row][col - 1] !== ".") {
+      col--;
+    }
+    return [row, col];
+  }
+  if (direction === "down") {
+    while (row > 0 && grid[row - 1][col] !== ".") {
+      row--;
+    }
+    return [row, col];
+  }
+};
+
+const getAnswerStartingAt = (grid, direction, [row, col]) => {
+  if (direction === "right") {
+    let answer = "";
+    while (col < GRID_SIZE && grid[row][col] !== ".") {
+      answer += grid[row][col];
+      col++;
+    }
+    return answer;
+  }
+  if (direction === "down") {
+    let answer = "";
+    while (row < GRID_SIZE && grid[row][col] !== ".") {
+      answer += grid[row][col];
+      row++;
+    }
+    return answer;
+  }
+};
+
+export const positionToAnswer = (grid, direction, [row, col]) => {
+  const [startingRow, startingCol] = findPositionClueStart(grid, direction, [
+    row,
+    col
+  ]);
+  return getAnswerStartingAt(grid, direction, [startingRow, startingCol]);
+};
+
+const insertTextStartingAt = (grid, direction, [row, col], fixedGrid, text) => {
+  if (direction === "right") {
+    for (let i = 0; i < text.length; i++) {
+      grid = placeValue(grid, row, col, text[i], fixedGrid);
+      col++;
+    }
+    return grid;
+  }
+  if (direction === "down") {
+    for (let i = 0; i < text.length; i++) {
+      grid = placeValue(grid, row, col, text[i], fixedGrid);
+      row++;
+    }
+    return grid;
+  }
+};
+
+export const insertTextAtPositionClue = (
+  grid,
+  direction,
+  [row, col],
+  fixedGrid,
+  text
+) => {
+  const [startingRow, startingCol] = findPositionClueStart(grid, direction, [
+    row,
+    col
+  ]);
+  return insertTextStartingAt(
+    grid,
+    direction,
+    [startingRow, startingCol],
+    fixedGrid,
+    text
+  );
 };

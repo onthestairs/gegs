@@ -6,6 +6,7 @@ import { setGridValue, moveGridCursor, moveGridBack } from "../actions";
 import { currentCrosswordState } from "../reducers/utils";
 import Name from "./grid/Name";
 import Controls from "./grid/Controls";
+import Suggestions from "./grid/Suggestions";
 
 import { HotKeys } from "react-hotkeys";
 
@@ -17,6 +18,7 @@ const keyMap = {
 
 const Grid = ({
   grid,
+  showSuggestions,
   cursor,
   onDirectionPressed,
   onEntryPressed,
@@ -39,6 +41,8 @@ const Grid = ({
     backspace: onBackspacePressed
   };
 
+  const suggestions = showSuggestions ? <Suggestions /> : "";
+
   return (
     <div>
       <Name />
@@ -46,15 +50,17 @@ const Grid = ({
         <div className="grid">{cells}</div>
       </HotKeys>
       <Controls />
+      {suggestions}
     </div>
   );
 };
 
 const mapStateToProps = state => {
-  const { grid, cursor } = currentCrosswordState(state);
+  const { grid, cursor, showSuggestions } = currentCrosswordState(state);
   return {
     grid,
-    cursor
+    cursor,
+    showSuggestions
   };
 };
 

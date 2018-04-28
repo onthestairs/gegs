@@ -11,6 +11,7 @@ const initialCrosswordState = {
   direction: "right",
   name: "Unnamed",
   fixGrid: false,
+  showSuggestions: false,
   clueBank: [{ answer: "AUSTIN", clue: "Absolute badman!" }],
   clueBankInput: {
     clue: "",
@@ -132,6 +133,20 @@ const crossword = (state = initialCrosswordState, action) => {
       };
     }
 
+    case "INSERT_TEXT_AT_CURSOR_CLUE": {
+      const newGrid = gridUtils.insertTextAtPositionClue(
+        grid,
+        direction,
+        [row, col],
+        fixGrid,
+        action.text
+      );
+      return {
+        ...state,
+        grid: newGrid
+      };
+    }
+
     case "CHANGE_CLUE_BANK_CLUE": {
       const newClueBankInput = {
         ...state.clueBankInput,
@@ -175,11 +190,6 @@ const crossword = (state = initialCrosswordState, action) => {
       };
 
     case "EDIT_CLUE_IN_BANK": {
-      const newClueBankClue = {
-        clue: action.clue,
-        answer: action.answer,
-        id: uuid.v4()
-      };
       const newClueBank = clueBank.map(clue => {
         const clueAnswer = stripAnswer(clue.answer).toUpperCase();
         const actionAnswer = stripAnswer(action.answer).toUpperCase();
@@ -228,6 +238,12 @@ const crossword = (state = initialCrosswordState, action) => {
       return {
         ...state,
         fixGrid: action.fixGridstatus
+      };
+
+    case "SET_SHOW_SUGGESTIONS_STATUS":
+      return {
+        ...state,
+        showSuggestions: action.showSuggestsionsStatus
       };
 
     case "CHANGE_CROSSWORD_NAME":

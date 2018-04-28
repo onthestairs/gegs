@@ -118,7 +118,6 @@ body,
 .gridHolder {
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 .gridHolder .nameGridHolder {
   display: flex;
@@ -230,4 +229,34 @@ div.gridHolder > div > div:nth-child(2):focus {
 
 .clueList .spillover {
   font-style: italic;
+}
+
+.suggestions {
+  height: 100px;
+  max-width: 500px;
+  overflow: scroll;
+  margin-top: 20px;
+}
+
+.suggestions ul {
+  display: flex;
+  list-style-type: none;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.suggestions ul li {
+  display: block;
+  font-size: 10px;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.suggestions ul a {
+  cursor: pointer;
+}
+
+.suggestions ul a:hover {
+  text-decoration: underline;
 }
