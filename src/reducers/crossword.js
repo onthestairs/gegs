@@ -141,9 +141,11 @@ const crossword = (state = initialCrosswordState, action) => {
         fixGrid,
         action.text
       );
+      const clues = gridUtils.gridClueLocations(newGrid);
       return {
         ...state,
-        grid: newGrid
+        grid: newGrid,
+        clues: clues
       };
     }
 
