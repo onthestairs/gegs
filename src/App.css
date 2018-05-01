@@ -150,7 +150,6 @@ div.gridHolder .gridOuter:focus {
   border-bottom: 1px solid grey;
   color: grey;
   font-size: 24px;
-  margin-bottom: 30px;
   font-style: italic;
 }
 .gridHolder .nameGrid:focus {
