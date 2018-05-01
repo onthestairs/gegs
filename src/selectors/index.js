@@ -80,7 +80,7 @@ export const isClueBankInputAnswerInClueBank = createSelector(
     const matchingClues = clueBank.filter(bankClue => {
       const bankClueAnswer = stripAnswer(bankClue.answer).toUpperCase();
       const clueBankInputAnswer = clueBankInput ? clueBankInput.answer : "";
-      const clueInputAnswer = clueBankInputAnswer.toUpperCase();
+      const clueInputAnswer = stripAnswer(clueBankInputAnswer).toUpperCase();
       return bankClueAnswer === clueInputAnswer;
     });
     return matchingClues.length > 0;
