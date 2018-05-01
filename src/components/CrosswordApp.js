@@ -12,9 +12,7 @@ const CrosswordApp = () => {
         <div className="clueBank">
           <ClueBank />
         </div>
-        <div className="gridHolder">
-          <Grid />
-        </div>
+        <Grid />
         <div className="cluesHolder">
           <Clues />
         </div>

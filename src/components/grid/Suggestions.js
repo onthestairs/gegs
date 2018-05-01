@@ -2,40 +2,66 @@ import React from "react";
 import { connect } from "react-redux";
 
 import * as gridUtils from "../../grid/grid";
-import { insertTextAtCursorClue } from "../../actions";
+import {
+  insertTextAtCursorClue,
+  setShowSuggestsionsStatus
+} from "../../actions";
 import { currentCrosswordState } from "../../reducers/utils";
 import { wordsThatMatchPattern } from "../../dictionary";
 
 const SuggestionsContainer = ({
+  showSuggestions,
   currentAnswer,
   suggestionsWanted,
   suggestions,
-  suggestionClick
+  suggestionClick,
+  onShowSuggestionsChange
 }) => {
   let content;
 
-  if (!suggestionsWanted) {
-    // dont want suggestions for this particular clue
+  if (!showSuggestions) {
     content = "";
+  } else if (!suggestionsWanted) {
+    // dont want suggestions for this particular clue
+    content = <div className="suggestionsList">Waiting for clue</div>;
   } else if (suggestionsWanted && suggestions.length === 0) {
     // we did want suggestions but couldn't find any
-    content = "No suggestions found in the dictionary";
+    content = (
+      <div className="suggestionsList">
+        No suggestions found in the dictionary
+      </div>
+    );
   } else {
     // we found suggestions
     const lis = suggestions.map(suggestion => (
-      <li key={suggestion}>
+      <div key={suggestion} className="suggestion">
         <a onClick={e => suggestionClick(suggestion.toLowerCase())}>
           {suggestion}
         </a>
-      </li>
+      </div>
     ));
-    content = <ul>{lis}</ul>;
+    content = <div className="suggestionsList">{lis}</div>;
   }
-  return <div className="suggestions">{content}</div>;
+
+  const controlText = showSuggestions ? "↓" : "↑";
+
+  return (
+    <div className="suggestionsBox">
+      <div
+        className="suggestionsControl"
+        onClick={e => onShowSuggestionsChange(!showSuggestions)}
+      >
+        Suggested words {controlText}
+      </div>
+      {content}
+    </div>
+  );
 };
 
 const mapStateToProps = state => {
-  const { grid, direction, cursor } = currentCrosswordState(state);
+  const { grid, direction, cursor, showSuggestions } = currentCrosswordState(
+    state
+  );
   const currentAnswer = gridUtils.positionToAnswer(grid, direction, cursor);
   const currentAnswerPattern = currentAnswer
     .replace(/[^a-zA-Z]/g, "?")
@@ -52,6 +78,7 @@ const mapStateToProps = state => {
     suggestions = wordsThatMatchPattern(currentAnswerPattern);
   }
   return {
+    showSuggestions,
     currentAnswer,
     suggestionsWanted,
     suggestions
@@ -62,6 +89,9 @@ const mapDispatchToProps = dispatch => {
   return {
     suggestionClick: text => {
       dispatch(insertTextAtCursorClue(text));
+    },
+    onShowSuggestionsChange: showSuggestions => {
+      dispatch(setShowSuggestsionsStatus(showSuggestions));
     }
   };
 };

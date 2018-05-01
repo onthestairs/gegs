@@ -3,14 +3,9 @@ import { connect } from "react-redux";
 import { setFixGridStatus, setShowSuggestsionsStatus } from "../../actions";
 import { currentCrosswordState } from "../../reducers/utils";
 
-const ControlsContainer = ({
-  fixGrid,
-  onFixGridChange,
-  showSuggestions,
-  onShowSuggestionsChange
-}) => {
+const ControlsContainer = ({ fixGrid, onFixGridChange }) => {
   return (
-    <div>
+    <div className="gridControls">
       <label>
         <input
           type="checkbox"
@@ -20,24 +15,14 @@ const ControlsContainer = ({
         />{" "}
         Fix grid
       </label>
-      <label>
-        <input
-          type="checkbox"
-          checked={showSuggestions}
-          onChange={onShowSuggestionsChange}
-          value="showSuggestions"
-        />{" "}
-        Show Suggestions
-      </label>
     </div>
   );
 };
 
 const mapStateToProps = state => {
-  const { fixGrid, showSuggestions } = currentCrosswordState(state);
+  const { fixGrid } = currentCrosswordState(state);
   return {
-    fixGrid,
-    showSuggestions
+    fixGrid
   };
 };
 
@@ -45,9 +30,6 @@ const mapDispatchToProps = dispatch => {
   return {
     onFixGridChange: e => {
       dispatch(setFixGridStatus(e.target.checked));
-    },
-    onShowSuggestionsChange: e => {
-      dispatch(setShowSuggestsionsStatus(e.target.checked));
     }
   };
 };

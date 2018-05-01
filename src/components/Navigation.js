@@ -5,7 +5,7 @@ import NewCrossword from "./NewCrossword";
 import Drawer from "react-motion-drawer";
 import { setNavOpen } from "../actions";
 
-const APP_NAME = "NAME";
+const APP_NAME = "GEGS";
 
 const NavigationComponent = ({ isNavOpen, dispatch }) => {
   return (
@@ -15,7 +15,7 @@ const NavigationComponent = ({ isNavOpen, dispatch }) => {
         className="drawerButton"
         onClick={e => dispatch(setNavOpen(!isNavOpen))}
       >
-        NAVIGATION
+        My crosswords
       </div>
       <Drawer
         right={true}

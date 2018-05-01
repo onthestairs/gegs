@@ -18,7 +18,6 @@ const keyMap = {
 
 const Grid = ({
   grid,
-  showSuggestions,
   cursor,
   onDirectionPressed,
   onEntryPressed,
@@ -41,26 +40,23 @@ const Grid = ({
     backspace: onBackspacePressed
   };
 
-  const suggestions = showSuggestions ? <Suggestions /> : "";
-
   return (
-    <div>
+    <div className="gridHolder">
       <Name />
-      <HotKeys keyMap={keyMap} handlers={handlers}>
+      <Controls />
+      <HotKeys keyMap={keyMap} handlers={handlers} className="gridOuter">
         <div className="grid">{cells}</div>
       </HotKeys>
-      <Controls />
-      {suggestions}
+      <Suggestions />
     </div>
   );
 };
 
 const mapStateToProps = state => {
-  const { grid, cursor, showSuggestions } = currentCrosswordState(state);
+  const { grid, cursor } = currentCrosswordState(state);
   return {
     grid,
-    cursor,
-    showSuggestions
+    cursor
   };
 };
 

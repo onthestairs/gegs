@@ -34,7 +34,6 @@ const ClueBankComponent = ({ clues, dispatch }) => {
   const clueLis = clues.reverse().map(clue => renderClue(clue, dispatch));
   return (
     <div>
-      <h3>Clue bank</h3>
       <AddClueToBank />
       <ul>{clueLis}</ul>
     </div>
