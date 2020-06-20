@@ -71,7 +71,7 @@ const mapStateToProps = state => {
   if (
     currentAnswerPattern.length > 1 &&
     currentAnswerPattern.indexOf("?") !== -1 &&
-    currentAnswerPattern.replace(/[^\?]/, "").length !==
+    currentAnswerPattern.replace(/[^?]/, "").length !==
       currentAnswerPattern.length
   ) {
     suggestionsWanted = true;

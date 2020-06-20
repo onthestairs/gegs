@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { setFixGridStatus, setShowSuggestsionsStatus } from "../../actions";
+import { setFixGridStatus } from "../../actions";
 import { currentCrosswordState } from "../../reducers/utils";
 
 const ControlsContainer = ({ fixGrid, onFixGridChange }) => {
