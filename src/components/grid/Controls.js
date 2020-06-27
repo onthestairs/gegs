@@ -19,23 +19,24 @@ const ControlsContainer = ({ fixGrid, onFixGridChange }) => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { fixGrid } = currentCrosswordState(state);
   return {
-    fixGrid
+    fixGrid,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    onFixGridChange: e => {
+    onFixGridChange: (e) => {
       dispatch(setFixGridStatus(e.target.checked));
-    }
+    },
   };
 };
 
-const Controls = connect(mapStateToProps, mapDispatchToProps)(
-  ControlsContainer
-);
+const Controls = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ControlsContainer);
 
 export default Controls;
