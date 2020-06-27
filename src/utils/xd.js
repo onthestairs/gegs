@@ -58,6 +58,7 @@ const makeXDString = (crossword) => {
     s += clueStr;
     s += "\n";
   });
+  s += "\n";
   downClues.forEach((clue) => {
     const clueBody = makeClueBody(clue);
     const clueStr = `D${clue.n}. ${clueBody} ~ ${clue.answer}`;
